@@ -57,11 +57,15 @@ class LinkSearchField(ModelChoiceField):
         queryset = Page.objects.public()
         try:
             queryset = queryset.published().on_site(get_current_site())
+            # ADDED- inserted to avoid database error
+            choices = [(index, str(page)) for index, page in enumerate(queryset[:15])]
         except:
             choices = []  # can happen if database is not ready yet
         else:
             # set a minimal set of choices, otherwise django-select2 builds them for every published page
-            choices = [(index, str(page)) for index, page in enumerate(queryset[:15])]
+            # REMOVED - this causes a DB error
+            #choices = [(index, str(page)) for index, page in enumerate(queryset[:15])]
+            pass
         kwargs.setdefault('queryset', queryset.distinct())
         super().__init__(*args, **kwargs)
         self.choices = choices

@@ -13,7 +13,9 @@ def forwards(apps, schema_editor):
             continue
         try:
             cms_page = cascade_element.page.get_public_object()
-            icon_font = cms_page.cascadepage.icon_font
+            # Following line is disabled due to breaking transaction block in our db
+            # This migration does not modify any code for us.
+            #icon_font = cms_page.cascadepage.icon_font
             if not icon_font:
                 continue
         except:
