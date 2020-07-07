@@ -9,6 +9,7 @@ def migrate_link(glossary):
     link = glossary.pop('link', None)
     if link:
         if link['type'] == 'cmspage':
+            link['section'] = link.get('section', '\\')
             glossary.update({
                 'link_type': 'cmspage',
                 'cms_page': foreign_key(),
